@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import { getCurrentUser } from "@/lib/session"
 
-export default function Home() {
+
+export default async function Home() {
+  const user = await getCurrentUser()
   return (
     <main>
-   teste
+   {JSON.stringify(user)}
     </main>
   )
 }
