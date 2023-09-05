@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { UserLoginForm } from "@/components/user-login-auth"
 
 
 export const metadata: Metadata = {
@@ -40,11 +41,12 @@ export default function AuthenticationPage() {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                 Crie sua conta
+                 Entrar
               </h1>
               <p className="text-sm text-muted-foreground">
-                Digite seu e-mail abaixo para criar uma nova conta.
+                Digite seus dados de login.
               </p>
+              <UserLoginForm/>
             </div>
         
             <p className="px-8 text-center text-sm text-muted-foreground">
