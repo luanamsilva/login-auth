@@ -12,15 +12,25 @@ interface IUser {
 }
 export function UserLoginForm({ className, ...props}: UserAuthFormProps){
   const [data, setData] = useState<IUser>({ email: '', password: ''})
+
 async function onSubmit(event: React.SyntheticEvent) {
   event.preventDefault
+  setIsLoading(true)
+
+}
+const [isLoading, setIsLoading] = useState<boolean>(false)
+
+function handleChange(e:React.ChangeEvent<HTMLInputElement>){
+  setData((prev)=> {
+    return {...prev, [e.target.name]: e.target.value}
+  })
 }
 
   return(<div className={cn("grid gap-6", className)}{...props}>
   <form onSubmit={onSubmit}>
     <div className="grid gap-2">
   <div className="grid gap-1">
-  <Label>Usuário:</Label>
+  <Label htmlFor="email">Usuário:</Label>
   <Input
   id="email"
   placeholder="name@name.com"
@@ -28,8 +38,10 @@ type="email"
 autoCapitalize="none"
 autoComplete="email"
 autoCorrect="off"
+disabled={isLoading}
 name="email" 
 value={data.email}
+onChange={handleChange}
   />
   </div>
     </div>
