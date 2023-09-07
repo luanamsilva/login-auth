@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
@@ -16,6 +17,10 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
     setIsLoading(true);
+    setData({
+      email:'',
+      password:''
+    }), setIsLoading(false)
   }
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
