@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { Icons } from '@/components/icons';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
@@ -13,16 +14,19 @@ interface IUser {
 }
 export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   const [data, setData] = useState<IUser>({ email: '', password: '' });
+ const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
     setIsLoading(true);
+  
     setData({
-      email:'',
-      password:''
-    }), setIsLoading(false)
+      email: "",
+      password: "",
+    });
+    setIsLoading(false);
   }
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+ 
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setData((prev) => {
@@ -63,6 +67,12 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
            value={data.password}
            onChange={handleChange}/>
           </div>
+          <Button disabled={isLoading}>
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Entrar
+          </Button>
         </div>
       </form>
     </div>
