@@ -6,26 +6,24 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Icons } from '@/components/icons';
-import { signIn } from 'next-auth/react';
+
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
+  name: string
   email: string;
   password: string;
 }
-export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
-  const [data, setData] = useState<IUser>({ email: '', password: '' });
+export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
+  const [data, setData] = useState<IUser>({name:'', email: '', password: '' });
  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
     setIsLoading(true);
   
-    const res = await signIn<'credentials'>("credentials",{
-      ...data,
-      redirect:false
-    })
-    setData({
+     setData({
+      name:"",
       email: "",
       password: "",
     });
@@ -44,6 +42,18 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   <div className={cn('grid gap-6', className)} {...props}>
        <form onSubmit={onSubmit}>
         <div className="grid gap-2">
+        <div className="grid gap-1">
+            <Label htmlFor="email">Nome:</Label>
+            <Input
+              id="name"
+              placeholder="Nome"
+              type="text"
+              disabled={isLoading}
+              name="name"
+              value={data.name}
+              onChange={handleChange}
+            />
+          </div>
           <div className="grid gap-1">
             <Label htmlFor="email">Usuário:</Label>
             <Input
@@ -76,7 +86,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Entrar
+           Registrar
           </Button>
         </div>
       </form>
