@@ -21,7 +21,17 @@ export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
     setIsLoading(true);
-  
+
+   const request = await fetch("/api/users",{
+    method: 'POST',
+    headers:{
+      "Content-Type": "aplication/json",
+    } ,
+    body: JSON.stringify(data)
+  })
+  const response = await request.json()
+
+
      setData({
       name:"",
       email: "",
@@ -29,6 +39,7 @@ export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
     });
     setIsLoading(false);
   }
+ 
  
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
