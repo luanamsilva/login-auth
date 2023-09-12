@@ -25,12 +25,15 @@ export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
    const request = await fetch("/api/users",{
     method: 'POST',
     headers:{
-      "Content-Type": "aplication/json",
+      "Content-Type": "application/json",
     } ,
     body: JSON.stringify(data)
   })
   const response = await request.json()
-
+  
+  if(!request.ok){
+    console.log("Error")
+  }
 
      setData({
       name:"",
