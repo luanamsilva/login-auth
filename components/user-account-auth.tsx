@@ -6,6 +6,8 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Icons } from '@/components/icons';
+import { useToast } from './ui/use-toast';
+import { ToastAction } from './ui/toast';
 
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -15,6 +17,8 @@ interface IUser {
   password: string;
 }
 export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
+const {toast} = useToast()
+
   const [data, setData] = useState<IUser>({name:'', email: '', password: '' });
  const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -32,7 +36,15 @@ export function UserAccountForm({ className, ...props }: UserAuthFormProps) {
   const response = await request.json()
   
   if(!request.ok){
-    console.log("Error")
+    toast({
+      title: "Erro ",
+      description: response.console.error,
+      variant:  'destructive',
+      action: (
+        <ToastAction altText='Tente novamente'>Tente novamente</ToastAction>
+      )
+      
+    })
   }
 
      setData({
