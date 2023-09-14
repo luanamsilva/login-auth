@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { Icons } from '@/components/icons';
 import { useToast } from './ui/use-toast';
 import { ToastAction } from './ui/toast';
-
+import { useRouter } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
@@ -21,6 +21,7 @@ const {toast} = useToast()
 
   const [data, setData] = useState<IUser>({name:'', email: '', password: '' });
  const [isLoading, setIsLoading] = useState<boolean>(false);
+ const router = useRouter()
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
@@ -45,6 +46,9 @@ const {toast} = useToast()
       )
       
     })
+  }else{
+    console.log(response)
+    router.push('/login')
   }
 
      setData({
