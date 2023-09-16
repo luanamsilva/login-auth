@@ -7,6 +7,9 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Icons } from '@/components/icons';
 import { signIn } from 'next-auth/react';
+import { useToast } from './ui/use-toast';
+import { ToastAction } from './ui/toast';
+import { useRouter } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUser {
@@ -17,6 +20,9 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   const [data, setData] = useState<IUser>({ email: '', password: '' });
  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+const {toast} = useToast()
+const router = useRouter()
+
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault;
     setIsLoading(true);
@@ -25,6 +31,19 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       ...data,
       redirect:false
     })
+if(res?.error){
+    toast({
+      title: "Erro ",
+      description: res.error,
+      variant:  'destructive',
+      action: (
+        <ToastAction altText='Tente novamente'>Tente novamente</ToastAction>
+    )
+  })
+} else{
+  router.push('/')
+}
+
     setData({
       email: "",
       password: "",
