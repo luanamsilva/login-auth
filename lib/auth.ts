@@ -25,7 +25,7 @@ export const authOptions : NextAuthOptions = {
        if(!credentials?.email || !credentials.password) throw new Error("Dados inválidos!")
         const user = await db.user.findUnique({
           where: {
-            email: credentials.email
+            email: credentials?.email
          
           }
         })
@@ -49,4 +49,7 @@ export const authOptions : NextAuthOptions = {
   },
   secret: process.env.SECRET,
   debug: process.env.NODE_ENV === "development",
+  pages: {
+    signIn: "/login"
+  }
 }
